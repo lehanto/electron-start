@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>初体験Electron</title>
+        
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/photon.min.css">
+
+    <!-- Javascript -->
+    <script src="js/menu.js" charset="utf-8"></script>
+    <link href="./honoka/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="./mysql.js"></script>
+
+    <!-- jQuery読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- BootstrapのJS読み込み -->
+    <script src="./honoka/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="window">
+
+      <!-- Your app's content goes inside .window-content -->
+      <div class="window-content">
+        <div class="pane-group">
+          <div class="pane pane-sm sidebar">
+            <nav class="nav-group">
+              <h5 class="nav-group-title">リンク</h5>
+              <span class="nav-group-item">
+                <span class="icon icon-home"></span>
+                connors
+              </span>
+              <span class="nav-group-item active">
+                <span class="icon icon-light-up"></span>
+                Home
+              </span>
+              <span class="nav-group-item">
+                <span class="icon icon-download"></span>
+                Downloads
+              </span>
+              <span class="nav-group-item">
+                <span class="icon icon-folder"></span>
+                <a href ="view.html">Documents</a>
+              </span>
+              <span class="nav-group-item">
+                <span class="icon icon-window"></span>
+                Applications
+              </span>
+              <span class="nav-group-item">
+                <span class="icon icon-signal"></span>
+                AirDrop
+              </span>
+              <span class="nav-group-item">
+                <span class="icon icon-monitor"></span>
+                Desktop
+              </span>
+            </nav>
+          </div>
+
+          <div class="pane">
+            <h1>ビール&#127866;</h1>
+            
+            <input type="button" name="mysql" value="MySQLに接続!" onClick="mysqlConnect()">
+
+             <form name="forrm1" id="id_form1" action="viex.html" method="post">
+               <table border="0">
+                 <tr>
+                   <td align="right"><b>ビール&#127866;名前 : </b></td>
+                   <td><input type="text" id="id_name" name="name" size="50" maxlengh="20"></td>
+                </tr>
+                <tr>
+                  <td align="right"><b>製造国 : </b></td>
+                  <td><input type="text" name="id_country" size="15" maxlength="20"></td>
+                </tr>
+                <tr>
+                  <td align="right"><b>価格 : </b></td>
+                  <td><input type="text" name="id_price" size="10" maxlength="15"></td>
+                  <td><b>円</b></td>
+                </tr>
+                <tr>
+                  <td align="right"><b>種類 : </b></td>
+                  <td><input type="text" name="id_category" size="10" maxlength="15"></td>
+                </tr>
+                <tr>
+                  <td align="right"><b>メモ : </b></td>
+                  <td><input type="text" name="id_memo" size="50" maxlength="100"></td>
+                </tr>
+                <tr>
+                  <td align="right"><b>評価 : </b></td>
+                  <td><input type="text" name="id_value" size="10" maxlength="15"></td>
+                </tr>
+              </table>
+              <div id="output"></div>
+
+             <input type="button" value="保存" onclick="mysqlConnect()" />
+             <input type="button" value="つぶやく!!" onclick="beerTweet()"/>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" langueage="javascript">
+              function mysqlConnect(){
+                var mysql = require('mysql');
+                var connection = mysql.createConnection({
+                    host: 'localhost',
+                    database: 'beer',
+                    user: 'root',
+                    password: '232002'
+                });
+
+                var name = document.forms.id_form1.id_name.value;
+                var country = document.forms.id_form1.id_country.value;
+                var price = document.forms.id_form1.id_price.value;
+                var category = document.forms.id_form1.id_category.value;
+                var memo = document.forms.id_form1.id_memo.value;
+                var value = document.forms.id_form1.id_value.value;
+
+                target = document.getElementById("output");
+                target.innerText = (name);
+
+                var query = connection.query('insert into beers (name, country, price, category, memo) values (" ' + name + ' ", ' + ' " ' + country + ' ", ' + ' " ' + price + ' ", ' + ' " ' + category + ' ", ' + ' " ' + memo + ' ");', function (err, results) {
+                    console.log('--- results ---');
+                    console.log(results);
+                    
+                    console.log('name is ...');
+                    console.log(results[0].last_name);
+                });
+
+                connection.end(function() {
+                    console.log('connection end');
+                   });
+              }
+
+              function beerTweet(){
+                    var twitter = require('twitter');
+                    var print = require('util').log;
+
+                    var name = document.forms.id_form1.id_name.value;
+                    var country = document.forms.id_form1.id_country.value;
+                    var price = document.forms.id_form1.id_price.value;
+                    var category = document.forms.id_form1.id_category.value;
+                    var memo = document.forms.id_form1.id_memo.value;
+                    var value = document.forms.id_form1.id_value.value;
+
+                    var client = new twitter({
+                        consumer_key            :   'FXySudMGKkdFsprtuyn9alihg',
+                        consumer_secret         :   'Qbv8pJhGJyYVbjrnPI0DKd3otBFp96OF2HC5hR655hTxGmFx7t',
+                        access_token_key       :    '470636943-mJFJzWlhoKPUIxw8i0ywPbCQ65YMEnnRtO6Cggyh',
+                        access_token_secret     :   'r4H7r8NOf4C6pBtmvB30cDMizfXeYKhlb7InOtQ1zbNW9'
+                    });
+
+                        var xxx = name + country + price + category + memo;
+
+                        client.post('statuses/update', {status: xxx},  function(error, tweet, response){
+                        if(error) throw error;
+                        console.log(tweet);  // Tweet body. 
+                        console.log(response);  // Raw response object. 
+                        });
+              }
+              </script>
+  </body>
+</html>

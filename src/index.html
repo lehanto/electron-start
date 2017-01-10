@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello World!</title>
+        <link href="./honoka/css/bootstrap.min.css" rel="stylesheet">
+        <!-- jQuery読み込み -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="./thamnail.js"></script>
+        <!-- BootstrapのJS読み込み -->
+        <script src="./honoka/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <h1>初めてのElectron</h1>
+    <form enctype="multipart/form-data" method="post">
+        <input type="file" name="userfile" accept="image/*">
+    </form>
+
+    <form method="post" enctype="multipart/form-data">
+        画像ファイル<input type="file" name="pic">
+        <br>
+        <input type="submit" name="botan" value="send">
+    </form>
+    <a href="./addList.html">表示</a><br>
+    <button type="button" class="btn btn-success" onclick="alert('保存しました!!')">Success</button>
+  </body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>初体験Electron</title>
+        
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/photon.min.css">
+
+    <!-- Javascript -->
+    <script src="js/menu.js" charset="utf-8"></script>
+    <link href="./honoka/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="./thamnail.js"></script>
+
+    <!-- BootstrapのJS読み込み -->
+    <script src="./honoka/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="window">
+
+      <!-- Your app's content goes inside .window-content -->
+      <div class="window-content">
+        <div class="pane-group">
+          <div class="pane pane-sm sidebar">
+            <nav class="nav-group">
+              <h5 class="nav-group-title">リンク</h5>
+              <span class="nav-group-item">
+                <span class="icon icon-home"></span>
+                connors
+              </span>
+              <span class="nav-group-item active">
+                <span class="icon icon-light-up"></span>
+                <a href="index.html">Home</a>
+              </span>
+              <span class="nav-group-item">
+                <span class="icon icon-download"></span>
+                Downloads
+              </span>
+              <span class="nav-group-item">
+                <span class="icon icon-folder"></span>
+                <a href ="view.html">Documents</a>
+              </span>
+              <span class="nav-group-item">
+                <span class="icon icon-window"></span>
+                Applications
+              </span>
+              <span class="nav-group-item">
+                <span class="icon icon-signal"></span>
+                AirDrop
+              </span>
+              <span class="nav-group-item">
+                <span class="icon icon-monitor"></span>
+                Desktop
+              </span>
+            </nav>
+          </div>
+
+          <div class="pane" id="output">
+            <h1>ビール&#127866;</h1>
+          </div>
+
+          <script type="text/javascript" langueage="javascript">
+              function mysqlConnect(){
+                var mysql = require('mysql');
+                var connection = mysql.createConnection({
+                    host: 'localhost',
+                    database: 'beer',
+                    user: 'root',
+                    password: '232002'
+                });
+                target = document.getElementById("output");
+
+                var query = connection.query('select name, country, price, category, memo, value from beers;', function (err, results) {
+                    console.log('--- results ---');
+                    console.log(results);
+                    var json_text = JSON.stringify(results);
+                    target = document.getElementById("output");
+                    target.innerText = (json_text);
+                    console.log('name is ...');
+                    console.log(results[0].last_name);
+                });
+
+                connection.end(function() {
+                    console.log('connection end');
+                   });
+              }
+              </script>
+            <input type="button" name="mysql" value="MySQLに接続!" onClick="mysqlConnect()">
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
